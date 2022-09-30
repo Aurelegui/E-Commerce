@@ -40,6 +40,7 @@ const Button = styled.button`
     border: none;
     background-color: teal;
     color: white;
+    cursor: pointer;
 `
 
 const Newsletter = () => {
@@ -52,7 +53,7 @@ const Newsletter = () => {
             <InputContainer>
                 <Input placeholder='Your email' />
                 <Button>
-                    <SendOutlinedIcon />
+                    <SendOutlinedIcon style={{ paddingTop: "3px" }} />
                 </Button>
             </InputContainer>
         </Container>
