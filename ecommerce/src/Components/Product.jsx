@@ -33,7 +33,7 @@ const Container = styled.div`
     &:hover ${Info} {
         opacity: 1;
     } 
-    `
+`
 
 const Circle = styled.div`
     width: 200px;
@@ -41,12 +41,13 @@ const Circle = styled.div`
     border-radius: 50%;
     background-color: white;
     position: absolute;
-    `
+`
 
 const Image = styled.img`
     height: 75%;
     z-index: 2;
-    `
+`
+
 const Icon = styled.div`
     width: 40px;
     height: 40px;
@@ -61,7 +62,7 @@ const Icon = styled.div`
     
     &:hover{
         background-color: #e9f5f5;
-        transform: scale(1.1);
+        transform: scale(1.2);
     }
 `
 

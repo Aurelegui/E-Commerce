@@ -7,7 +7,8 @@ import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined';
 
 const Container = styled.div`
-   display: flex;
+    background-color: antiquewhite;
+    display: flex;
 `
 
 const Left = styled.div`
@@ -78,8 +79,6 @@ const Payment = styled.img`
     width: 45%;
     height: auto;
 `
-
-
 
 const Footer = () => {
     return (
