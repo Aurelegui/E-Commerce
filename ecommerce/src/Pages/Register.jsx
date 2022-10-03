@@ -47,6 +47,10 @@ const Button = styled.button`
     color: white;
     cursor: pointer;
     text-align: center;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `
 
 const Register = () => {
