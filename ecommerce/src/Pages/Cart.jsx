@@ -14,7 +14,7 @@ const Wrapper = styled.div`
 `
 
 const Title = styled.h1`
-    font-weight: 300;
+    font-weight: 400;
     text-align: center;
 `
 
@@ -130,11 +130,11 @@ const Summary = styled.div`
     border: 0.5px solid lightgray;
     border-radius: 10px;
     padding: 20px;
-    height: 50vh;
+    height: 100%;
 `
 
 const SummaryTitle = styled.h1`
-    font-weight: 200;
+    font-weight: 400;
 `
 
 const SummaryItem = styled.div`
@@ -154,8 +154,8 @@ const SummaryItemPrice = styled.span`
 `
 
 const SummaryButton = styled.button`
-    width: 50%;
     font-weight: 600;
+    width: 50%;
     padding: 10px;
     background-color: black;
     color: white;
