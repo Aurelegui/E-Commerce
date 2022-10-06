@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { mobile } from '../responsive';
 
 const Container = styled.div`
     width: 100%;
@@ -18,6 +19,9 @@ const Wrapper = styled.div`
     padding: 20px;
     background-color: white;
     border: 1px solid teal;
+    ${mobile({
+    width: "75%",
+})}
 
 `
 const Title = styled.h1`
@@ -51,6 +55,9 @@ const Button = styled.button`
     display: flex;
     justify-content: center;
     align-items: center;
+    ${mobile({
+    width: "100%",
+})}
 `
 
 const Register = () => {

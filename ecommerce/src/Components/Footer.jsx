@@ -8,7 +8,7 @@ import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined';
 import { mobile } from '../responsive';
 
 const Container = styled.div`
-    background-color: antiquewhite;
+    background-color: white;
     display: flex;
     ${mobile({
     flexDirection: 'column',
@@ -50,6 +50,10 @@ const ListItem = styled.li`
 const Right = styled.div`
     flex: 1;
     padding: 20px;
+    ${mobile({
+    backgroundColor: 'antiquewhite',
+})}
+
 `
 
 const Logo = styled.h1`

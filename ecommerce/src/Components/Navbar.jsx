@@ -41,6 +41,9 @@ const SearchContainer = styled.div`
     align-items: center;
     margin-left: 25px;
     padding: 5px;
+    ${mobile({
+    marginLeft: '5px'
+})}
 `
 
 const Input = styled.input`
@@ -53,6 +56,10 @@ const Input = styled.input`
 const Center = styled.div`
     flex: 1;
     text-align: center;
+    ${mobile({
+    marginLeft: '5px',
+    flex: 2
+})}
 `
 
 const Logo = styled.h1`
@@ -68,8 +75,9 @@ display: flex;
 align-items: center;
 justify-content: flex-end;
 ${mobile({
-    flex: "2",
-    justifyContent: 'center'
+    flex: "1",
+    justifyContent: 'center',
+    marginRight: "5px"
 })}
 `
 
@@ -103,7 +111,7 @@ const Navbar = () => {
                         REGISTER
                     </MenuItem>
                     <MenuItem>
-                        SIGN IN
+                        LOGIN
                     </MenuItem>
                     <MenuItem>
                         <Badge badgeContent={0} color="primary">
