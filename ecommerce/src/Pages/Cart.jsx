@@ -4,7 +4,7 @@ import Footer from '../Components/Footer';
 import Navbar from '../Components/Navbar';
 import Remove from '@mui/icons-material/RemoveOutlined';
 import Add from '@mui/icons-material/AddOutlined';
-import { mobile } from '../responsive'
+import { mobile, tablet } from '../responsive'
 
 const Container = styled.div`
     

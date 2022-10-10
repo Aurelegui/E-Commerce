@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import SearchOutlined from '@mui/icons-material/SearchOutlined';
 import Badge from '@mui/material/Badge';
 import ShoppingCart from '@mui/icons-material/ShoppingCartOutlined';
-import { mobile } from '../responsive'
+import { mobile, tablet } from '../responsive'
 
 const Container = styled.div`
     height: 60px;

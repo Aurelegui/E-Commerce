@@ -98,9 +98,7 @@ const Footer = () => {
             <Left>
                 <Logo>BAL.</Logo>
                 <Description>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. *
-                    Quas accusamus natus quis magni doloremque, ut aspernatur neque totam,
-                    sunt iusto deleniti molestiae illum et ab minus officia similique animi delectus.
+                    A super slick e-commerce !
                 </Description>
                 <SocialContainer>
                     <SocialIcon color="3B5999">

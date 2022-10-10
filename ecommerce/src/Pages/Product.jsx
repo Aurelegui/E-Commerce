@@ -5,7 +5,7 @@ import Navbar from '../Components/Navbar';
 import Newsletter from '../Components/Newsletter';
 import RemoveOutlinedIcon from '@mui/icons-material/RemoveOutlined';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
-import { mobile } from '../responsive';
+import { mobile, smallScreen, tablet } from '../responsive';
 
 
 const Container = styled.div`
@@ -30,10 +30,11 @@ const ImageContainer = styled.div`
 
 const Image = styled.img`
     width: 100%;
-    max-height: 90vh;
-    object-fit: cover;
+    max-height: 70vh;
+    object-fit: contain;
     ${mobile({
-    height: "30vh",
+    objectFit: "cover",
+    maxHeight: "55vh",
 })}
 `
 
@@ -57,6 +58,9 @@ const Desc = styled.p`
 const Price = styled.span`
     font-weight: 100;
     font-size: 40px;
+    ${tablet({
+    fontSize: "35px"
+})}
 `
 
 const FilterContainer = styled.div`
@@ -64,15 +68,19 @@ const FilterContainer = styled.div`
     margin: 30px 0px;
     display: flex;
     justify-content: space-between;
-    ${mobile({
+    ${smallScreen({
     width: "100%",
+    flexDirection: "column",
+    margin: "10px 0px"
 })}
 `
 
 const Filter = styled.div`
     display: flex;
     align-items: center;
-
+    ${smallScreen({
+    padding: "10px 0px"
+})}
 `
 
 const FilterTitle = styled.span`
@@ -103,8 +111,9 @@ const AddContainer = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    ${mobile({
+    ${smallScreen({
     width: "100%",
+    justifyContent: "space-between"
 })}
 `
 

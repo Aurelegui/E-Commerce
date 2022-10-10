@@ -4,7 +4,7 @@ import Footer from '../Components/Footer';
 import Navbar from '../Components/Navbar';
 import Newsletter from '../Components/Newsletter';
 import Products from '../Components/Products';
-import { mobile } from '../responsive';
+import { mobile, tablet } from '../responsive';
 
 const Container = styled.div`
 
