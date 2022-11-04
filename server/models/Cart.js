@@ -6,13 +6,13 @@ const CartSchema = new mongoose.Schema(
         products: [
             {
                 productId: {
-                    type: String
+                    type: String,
                 },
                 quantity: {
                     type: Number,
                     default: 1,
-                }
-            }
+                },
+            },
         ],
     },
     { timestamps: true }
