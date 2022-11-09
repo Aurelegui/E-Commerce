@@ -1,17 +1,15 @@
 import Pay from './components/Pay';
+import Success from './components/Success';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
   return (
-    // <Router>
-    //   <Switch>
-    //     <Route>
-    <Pay path='/pay' />
-    /* </Route>
-    <Route>
-      <Success path='/success' />
-    </Route>
-  </Switch>
-</Router> */
+    <Router>
+      <Routes>
+        <Route path='/pay' element={<Pay />} />
+        <Route path='/success' element={<Success />} />
+      </Routes>
+    </Router>
   );
 }
 

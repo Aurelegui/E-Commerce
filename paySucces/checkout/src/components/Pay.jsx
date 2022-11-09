@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import React from 'react'
 import StripeCheckout from 'react-stripe-checkout';
 import { useEffect, useState } from 'react';
@@ -6,6 +7,7 @@ const KEY = 'pk_test_51M0RZkIrWLfoKmJexegguaDmYQo22HmZRDn9e9VodUh7uv86s2140tbFEK
 
 const Pay = () => {
     const [stripeToken, setStripeToken] = useState(null);
+    const navigate = useNavigate();
 
     const onToken = (token) => {
         setStripeToken(token);
@@ -14,17 +16,19 @@ const Pay = () => {
     useEffect(() => {
         const makeRequest = async () => {
             try {
-                const res = await axios.post("http://localhost:5000/api/checkout/payement", {
+                const res = await axios.post("http://localhost:5000/api/checkout/payment", {
                     tokenId: stripeToken.id,
                     amount: 2000,
                 });
                 console.log(res.data);
+                navigate("/Success");
             } catch (err) {
-                console.log(err)
+                console.log("error catch");
+                console.log(err);
             }
         };
         stripeToken && makeRequest();
-    }, [stripeToken]);
+    }, [stripeToken, navigate]);
 
     return (
         <div
@@ -35,32 +39,35 @@ const Pay = () => {
                 justifyContent: 'center'
             }}
         >
-            <StripeCheckout
-                name='E-commerce'
-                // image='../public/logo192.png'
-                billingAddress
-                shippingAddress
-                description='Your total is $20'
-                amount={2000}
-                token={onToken}
-                stripeKey={KEY}
-            >
-                <button
-                    style={{
-                        border: 'none',
-                        width: 120,
-                        borderRadius: 5,
-                        padding: '20px',
-                        backgroundColor: 'black',
-                        color: 'white',
-                        fontWeight: '600',
-                        cursor: 'pointer'
-                    }}
+            {stripeToken ? (
+                <span>Processing... Please wait...</span>
+            ) : (
+                <StripeCheckout
+                    name='E-commerce'
+                    // image='../public/logo192.png'
+                    billingAddress
+                    shippingAddress
+                    description='Your total is $20'
+                    amount={2000}
+                    token={onToken}
+                    stripeKey={KEY}
                 >
-                    Pay Now
-                </button>
-            </StripeCheckout>
-
+                    <button
+                        style={{
+                            border: 'none',
+                            width: 120,
+                            borderRadius: 5,
+                            padding: '20px',
+                            backgroundColor: 'black',
+                            color: 'white',
+                            fontWeight: '600',
+                            cursor: 'pointer'
+                        }}
+                    >
+                        Pay Now
+                    </button>
+                </StripeCheckout>
+            )}
         </div>
     )
 }
