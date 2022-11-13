@@ -1,10 +1,12 @@
+import { useLocation } from 'react-router-dom';
+import { useState } from 'react';
 import styled from 'styled-components';
 import Announcement from '../Components/Announcement';
 import Footer from '../Components/Footer';
 import Navbar from '../Components/Navbar';
 import Newsletter from '../Components/Newsletter';
 import Products from '../Components/Products';
-import { mobile, tablet } from '../responsive';
+import { mobile } from '../responsive';
 
 const Container = styled.div`
 
@@ -55,6 +57,27 @@ const Option = styled.option`
 
 
 const ProductList = () => {
+    const location = useLocation();
+    const category = location.pathname.split("/")[2];
+    const [filters, setFilters] = useState({});
+    const [sort, setSort] = useState("newest");
+
+    const handleFilters = (e) => {
+        const value = e.target.value;
+        setFilters({
+            ...filters,
+            [e.target.name]: value
+        })
+        console.log(filters);
+    }
+
+    const handleSort = (e) => {
+        const valueSort = e.target.value;
+        setSort({
+            [e.target.name]: valueSort
+        })
+    }
+
     return (
         <Container>
             <Navbar />
@@ -63,35 +86,41 @@ const ProductList = () => {
             <FilterContainer>
                 <Filter>
                     <FilterText>Filter Products</FilterText>
-                    <Select>
-                        <Option disabled selected >Color</Option>
-                        <Option>White</Option>
-                        <Option>Black</Option>
-                        <Option>Red</Option>
-                        <Option>Blue</Option>
-                        <Option>Yellow</Option>
-                        <Option>Green</Option>
+                    <Select name="color" onChange={handleFilters}>
+                        <Option >Color</Option>
+                        <Option >white</Option>
+                        <Option >black</Option>
+                        <Option >red</Option>
+                        <Option >blue</Option>
+                        <Option >yellow</Option>
+                        <Option >green</Option>
+                        <Option >pink</Option>
+                        <Option >orange</Option>
                     </Select>
-                    <Select>
-                        <Option disabled selected >Size</Option>
-                        <Option>38</Option>
-                        <Option>39</Option>
-                        <Option>40</Option>
-                        <Option>41</Option>
-                        <Option>42</Option>
-                        <Option>43</Option>
+                    <Select name="size" onChange={handleFilters}>
+                        <Option >Size</Option>
+                        <Option >36</Option>
+                        <Option >37</Option>
+                        <Option >38</Option>
+                        <Option >39</Option>
+                        <Option >40</Option>
+                        <Option >41</Option>
+                        <Option >42</Option>
+                        <Option >43</Option>
+                        <Option >44</Option>
+                        <Option >45</Option>
                     </Select>
                 </Filter>
                 <Filter>
                     <FilterText>Sort Products</FilterText>
-                    <Select>
-                        <Option disabled selected >Newest</Option>
-                        <Option>Price (asc)</Option>
-                        <Option>Price (desc)</Option>
+                    <Select name="filter" onChange={handleSort}>
+                        <Option value='Newest'>Newest</Option>
+                        <Option value='asc'>Price (asc)</Option>
+                        <Option value='desc'>Price (desc)</Option>
                     </Select>
                 </Filter>
             </FilterContainer>
-            <Products />
+            <Products category={category} filters={filters} sort={sort} />
             <Newsletter />
             <Footer />
         </Container>
