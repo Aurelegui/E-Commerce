@@ -27,19 +27,19 @@ export const categories = [
     id: 1,
     img: "https://static.nike.com/a/images/f_auto,cs_srgb/w_1536,c_limit/cab6506c-caf5-4d09-ab1d-e2bbf0f54105/nike%E2%80%99s-most-lightweight-running-shoes.jpg",
     title: "RUNNING LOVER",
-    category: "woman"
+    category: "women"
   },
   {
     id: 2,
     img: "https://static.nike.com/a/images/f_auto/dpr_3.0,cs_srgb/h_500,c_limit/129c0555-c71b-4819-89bd-226d5e3b9669/the-best-nike-basketball-shoes-for-guards.jpg",
     title: "BASKETBALL",
-    category: "shoes"
+    category: "man"
   },
   {
     id: 3,
     img: "https://static.nike.com/a/images/f_auto,cs_srgb/w_1536,c_limit/5e81213a-612e-4ff6-b1b4-8244bd6b2d14/what-are-the-best-nike-basketball-shoes.jpg",
     title: "BALL IS LIFE",
-    category: "man"
+    category: "shorts"
   },
 ];
 

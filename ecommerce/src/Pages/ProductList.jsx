@@ -1,5 +1,5 @@
 import { useLocation } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import Announcement from '../Components/Announcement';
 import Footer from '../Components/Footer';
@@ -62,22 +62,21 @@ const ProductList = () => {
     const [filters, setFilters] = useState({});
     const [sort, setSort] = useState("newest");
 
-    const handleFilters = (e) => {
+    const handleFilters = useCallback((e) => {
         const value = e.target.value;
-        setFilters({
-            ...filters,
+        setFilters(prev => ({
+            ...prev,
             [e.target.name]: value
-        })
-        console.log(filters);
-    }
+        }))
+    }, [setFilters])
 
-    const handleSort = (e) => {
+    const handleSort = useCallback((e) => {
         const valueSort = e.target.value;
         setSort({
             [e.target.name]: valueSort
         })
-    }
-
+    }, [setSort])
+    console.log(sort);
     return (
         <Container>
             <Navbar />
@@ -114,7 +113,7 @@ const ProductList = () => {
                 <Filter>
                     <FilterText>Sort Products</FilterText>
                     <Select name="filter" onChange={handleSort}>
-                        <Option value='Newest'>Newest</Option>
+                        <Option value='newest'>Newest</Option>
                         <Option value='asc'>Price (asc)</Option>
                         <Option value='desc'>Price (desc)</Option>
                     </Select>

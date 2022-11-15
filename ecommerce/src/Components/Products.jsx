@@ -1,7 +1,5 @@
-import { useEffect } from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-// import { popularProducts } from '../data';
 import Product from './Product';
 import axios from 'axios';
 
@@ -43,10 +41,25 @@ const Products = ({ category, filters, sort }) => {
             );
     }, [products, category, filters]);
 
+    useEffect(() => {
+        if (sort?.filter === "newest") {
+            setFilteredProducts(prev =>
+                [...prev].sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
+            );
+        } else if (sort?.filter === "asc") {
+            setFilteredProducts(prev =>
+                [...prev].sort((a, b) => a.price - b.price)
+            );
+        } else if (sort?.filter === "desc") {
+            setFilteredProducts(prev =>
+                [...prev].sort((a, b) => b.price - a.price)
+            );
+        }
+    }, [sort])
     return (
         <Container>
             {filteredProducts.map(item => (
-                <Product key={item.id} item={item} />
+                <Product key={item._id} item={item} />
             ))}
         </Container>
     )
