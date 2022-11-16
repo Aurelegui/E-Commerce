@@ -10,7 +10,6 @@ import {
   Routes,
   Route,
   Navigate,
-  // Link
 } from 'react-router-dom';
 
 const user = true;
@@ -18,11 +17,6 @@ const user = true;
 function App() {
 
   return (
-    // <div className="App">
-    //   <header className="App-header">
-    //     <Home />
-    //   </header>
-    // </div>
     <Router>
       <ScrollToTop>
         <Routes>

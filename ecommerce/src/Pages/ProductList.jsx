@@ -59,6 +59,7 @@ const Option = styled.option`
 const ProductList = () => {
     const location = useLocation();
     const category = location.pathname.split("/")[2];
+    const categoryTitle = category && category.charAt(0).toUpperCase() + category.slice(1);
     const [filters, setFilters] = useState({});
     const [sort, setSort] = useState("newest");
 
@@ -76,12 +77,11 @@ const ProductList = () => {
             [e.target.name]: valueSort
         })
     }, [setSort])
-    console.log(sort);
     return (
         <Container>
             <Navbar />
             <Announcement />
-            <Title>MEN SHOES</Title>
+            <Title>{categoryTitle || "Products"}</Title>
             <FilterContainer>
                 <Filter>
                     <FilterText>Filter Products</FilterText>

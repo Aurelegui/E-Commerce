@@ -1,3 +1,6 @@
+import { publicRequest } from '../requestMethods';
+import { useLocation } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Announcement from '../Components/Announcement';
 import Footer from '../Components/Footer';
@@ -95,6 +98,7 @@ const FilterColor = styled.div`
    background-color: ${props => props.color};
    margin: 0px 5px;
    cursor: pointer;
+   border: 1px solid black;
 `
 
 const FilterSize = styled.select`
@@ -147,28 +151,42 @@ const Button = styled.button`
 `
 
 const Product = () => {
+    const location = useLocation();
+    const id = location.pathname.split("/")[2];
+
+    const [product, setProduct] = useState({});
+
+    useEffect(() => {
+        const getProduct = async () => {
+            try {
+                const res = await publicRequest.get("/products/find/" + id);
+                setProduct(res.data);
+            } catch (err) {
+                console.log(err)
+            }
+        }
+        getProduct();
+        console.log(product);
+    }, [id])
+
     return (
         <Container>
             <Navbar />
             <Announcement />
             <Wrapper>
                 <ImageContainer>
-                    <Image src="https://static.nike.com/a/images/t_default/9cffba44-ab82-4920-af87-8c3478ee3659/kd15-basketball-shoes-10P3rj.png" />
+                    <Image src={product.img} />
                 </ImageContainer>
                 <InfoContainer>
-                    <Title>Kd 15</Title>
-                    <Desc>Lorem ipsum dolor sit amet consectetur,
-                        adipisicing elit. Minima iste maxime modi necessitatibus quisquam accusamus!
-                        Molestias autem laboriosam provident praesentium numquam facere, vero alias nulla
-                        explicabo unde officiis delectus esse?
-                    </Desc>
-                    <Price>$ 20</Price>
+                    <Title>{product.title}</Title>
+                    <Desc>{product.desc}</Desc>
+                    <Price>$ {product.price}</Price>
                     <FilterContainer>
                         <Filter>
-                            <FilterTitle>Color</FilterTitle>
-                            <FilterColor color="black" />
-                            <FilterColor color="darkblue" />
-                            <FilterColor color="gray" />
+                            <FilterTitle>{product.color}</FilterTitle>
+                            {product.color?.map((c) => {
+                                return <FilterColor color={c} key={c} />
+                            })}
                         </Filter>
                         <Filter>
                             <FilterTitle>Size</FilterTitle>

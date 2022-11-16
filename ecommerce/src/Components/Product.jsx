@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import SearchOutlined from '@mui/icons-material/SearchOutlined';
 import ShoppingCartOutlined from '@mui/icons-material/ShoppingCartOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import { useNavigate } from 'react-router-dom';
 
 const Info = styled.div`
     opacity: 0;
@@ -67,6 +68,10 @@ const Icon = styled.div`
 `
 
 const Product = ({ item }) => {
+    const navigate = useNavigate();
+    function handleClick() {
+        navigate(`/product/${item._id}`);
+    }
     return (
         <Container>
             <Circle />
@@ -75,7 +80,7 @@ const Product = ({ item }) => {
                 <Icon>
                     <ShoppingCartOutlined />
                 </Icon>
-                <Icon>
+                <Icon onClick={handleClick}>
                     <SearchOutlined />
                 </Icon>
                 <Icon>
