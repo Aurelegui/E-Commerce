@@ -1,6 +1,7 @@
 import { publicRequest } from '../requestMethods';
 import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Announcement from '../Components/Announcement';
 import Footer from '../Components/Footer';
@@ -9,7 +10,7 @@ import Newsletter from '../Components/Newsletter';
 import RemoveOutlinedIcon from '@mui/icons-material/RemoveOutlined';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import { mobile, smallScreen, tablet } from '../responsive';
-
+import { cartAdd, cartRemove } from "../redux/cartReducer"
 
 const Container = styled.div`
 
@@ -151,6 +152,8 @@ const Button = styled.button`
 `
 
 const Product = () => {
+    const dispatch = useDispatch()
+    const cartSize = useSelector(state => state.cart.length)
     const location = useLocation();
     const id = location.pathname.split("/")[2];
     const [product, setProduct] = useState({});
@@ -178,10 +181,27 @@ const Product = () => {
         }
     }
 
+    console.log(product);
+
     const handleClick = () => {
         // update cart USING REDUX
-
+        dispatch(cartAdd(
+            {
+                id: product._id,
+                price: product.price
+            }
+        ))
     }
+
+    const handleRemove = () => {
+        // update cart USING REDUX
+        dispatch(cartRemove(
+            {
+                id: product._id,
+            }
+        ))
+    }
+
 
 
     return (
@@ -220,6 +240,7 @@ const Product = () => {
                             <AddOutlinedIcon style={{ cursor: "pointer" }} onClick={() => handleQuantity("inc")} />
                         </AmountContainer>
                         <Button onClick={handleClick}>ADD TO CART</Button>
+                        <Button onClick={handleRemove}>REMOVE</Button>
                     </AddContainer>
                 </InfoContainer>
             </Wrapper>
