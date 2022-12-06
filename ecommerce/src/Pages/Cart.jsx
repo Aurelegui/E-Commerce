@@ -1,10 +1,18 @@
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
+import { mobile } from '../responsive'
 import Announcement from '../Components/Announcement';
 import Footer from '../Components/Footer';
 import Navbar from '../Components/Navbar';
 import Remove from '@mui/icons-material/RemoveOutlined';
 import Add from '@mui/icons-material/AddOutlined';
-import { mobile } from '../responsive'
+import StripeCheckout from 'react-stripe-checkout';
+import { userRequest } from '../requestMethods';
+import { useNavigate } from 'react-router-dom';
+
+const KEY = "pk_test_51M0RZkIrWLfoKmJexegguaDmYQo22HmZRDn9e9VodUh7uv86s2140tbFEKhzfdn5z2hjp2W6IvVda7NDR2CGZLeH00n674Kcw0";
+
 
 const Container = styled.div`
     
@@ -171,20 +179,47 @@ const SummaryItemPrice = styled.span`
     
 `
 
-const SummaryButton = styled.button`
-    font-weight: 600;
-    width: 50%;
-    padding: 10px;
-    background-color: black;
-    color: white;
-    display: flex;
-    justify-content: center;
-    ${mobile({
-    width: "100%"
-})}
-`
+// const SummaryButton = styled.button`
+//     font-weight: 600;
+//     width: 50%;
+//     padding: 10px;
+//     background-color: black;
+//     color: white;
+//     display: flex;
+//     cursor: 'pointer';
+//     justify-content: center;
+//     ${mobile({
+//     width: "100%"
+// })
+//     }`
 
 const Cart = () => {
+    const cart = useSelector(state => state.cart);
+    const [stripeToken, setStripeToken] = useState(null);
+    const navigate = useNavigate();
+
+    const onToken = (token) => {
+        setStripeToken(token);
+        console.log(stripeToken);
+    }
+
+    useEffect(() => {
+        const makeRequest = async () => {
+            try {
+                const res = await userRequest.post('/checkout/payment', {
+                    tokenId: stripeToken.id,
+                    amount: 500,
+                });
+                navigate('/Success', { stripeData: res.data, products: cart });
+            } catch (err) {
+                console.log(err)
+            }
+        }
+        stripeToken && makeRequest();
+    }, [stripeToken, cart.total, navigate, cart]);
+
+
+
     return (
         <Container>
             <Navbar />
@@ -201,51 +236,34 @@ const Cart = () => {
                 </Top>
                 <Bottom>
                     <Info>
-                        <Product>
-                            <ProductDetail>
-                                <Image src="https://static.nike.com/a/images/t_default/9cffba44-ab82-4920-af87-8c3478ee3659/kd15-basketball-shoes-10P3rj.png" />
-                                <Details>
-                                    <ProductName><b>Product:</b> KD 15</ProductName>
-                                    <ProductId><b>ID:</b> 454677</ProductId>
-                                    <ProductColor color="#c5da90" />
-                                    <ProductSize><b>Size:</b> 42</ProductSize>
-                                </Details>
-                            </ProductDetail>
-                            <PriceDetail>
-                                <ProductAmountContainer>
-                                    <Remove />
-                                    <ProductAmount>2</ProductAmount>
-                                    <Add />
-                                </ProductAmountContainer>
-                                <ProductPrice>$ 80</ProductPrice>
-                            </PriceDetail>
-                        </Product>
+                        {cart.products.map(product => (
+                            <Product key={product._id}>
+                                <ProductDetail>
+                                    <Image src={product.img} />
+                                    <Details>
+                                        <ProductName><b>Product:</b> {product.title}</ProductName>
+                                        <ProductId><b>ID:</b> {product._id}</ProductId>
+                                        <ProductColor color={product.color} />
+                                        <ProductSize><b>Size:</b> {product.size}</ProductSize>
+                                    </Details>
+                                </ProductDetail>
+                                <PriceDetail>
+                                    <ProductAmountContainer>
+                                        <Remove />
+                                        <ProductAmount>{product.quantity}</ProductAmount>
+                                        <Add />
+                                    </ProductAmountContainer>
+                                    <ProductPrice>{product.price * product.quantity} $</ProductPrice>
+                                </PriceDetail>
+                            </Product>
+                        ))}
                         <Hr />
-                        <Product>
-                            <ProductDetail>
-                                <Image src="https://static.nike.com/a/images/t_default/7c578cde-85b3-4d9c-bc1d-989f03418f3e/lebron-19-basketball-shoes-2533G2.png" />
-                                <Details>
-                                    <ProductName><b>Product:</b> LEBRON'S 21</ProductName>
-                                    <ProductId><b>ID:</b> 455567</ProductId>
-                                    <ProductColor color="#6a54aa" />
-                                    <ProductSize><b>Size:</b> 41</ProductSize>
-                                </Details>
-                            </ProductDetail>
-                            <PriceDetail>
-                                <ProductAmountContainer>
-                                    <Remove />
-                                    <ProductAmount>2</ProductAmount>
-                                    <Add />
-                                </ProductAmountContainer>
-                                <ProductPrice>$ 90</ProductPrice>
-                            </PriceDetail>
-                        </Product>
                     </Info>
                     <Summary>
                         <SummaryTitle>ORDER SUMMARY</SummaryTitle>
                         <SummaryItem>
                             <SummaryItemText>Subtotal</SummaryItemText>
-                            <SummaryItemPrice>$ 170</SummaryItemPrice>
+                            <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
                         </SummaryItem>
                         <SummaryItem>
                             <SummaryItemText>Estimated Shipping</SummaryItemText>
@@ -257,9 +275,33 @@ const Cart = () => {
                         </SummaryItem>
                         <SummaryItem type="total">
                             <SummaryItemText>Total</SummaryItemText>
-                            <SummaryItemPrice>$ 170</SummaryItemPrice>
+                            <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
                         </SummaryItem>
-                        <SummaryButton>CHECKOUT NOW</SummaryButton>
+                        <StripeCheckout
+                            name='E-commerce'
+                            billingAddress
+                            shippingAddress
+                            description={`Your total is $ ${cart.total}`}
+                            currency='EUR'
+                            token={onToken}
+                            amount={500}
+                            stripeKey={KEY}>
+                            <button
+                                style={{
+                                    border: 'none',
+                                    width: 120,
+                                    borderRadius: 5,
+                                    padding: '20px',
+                                    backgroundColor: 'black',
+                                    color: 'white',
+                                    fontWeight: '600',
+                                    cursor: 'pointer'
+                                }}
+                            >
+                                Pay Now
+                            </button>
+                            {/* <SummaryButton>CHECKOUT NOW</SummaryButton> */}
+                        </StripeCheckout>
                     </Summary>
                 </Bottom>
             </Wrapper>
